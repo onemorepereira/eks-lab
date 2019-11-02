@@ -1,0 +1,51 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: mpereira
+  region: us-west-2
+
+nodeGroups:
+  - name: ng-1
+    instanceType: t2.large
+    privateNetworking: true
+    desiredCapacity: 2
+    labels:
+      nodegroup-type: groucho
+      role: expensive-compute
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        externalDNS: true
+        certManager: true
+        albIngress: true
+        xRay: true
+        cloudWatch: true
+
+  - name: ng-2
+    instanceType: mixed
+    privateNetworking: true
+    minSize: 2
+    maxSize: 5
+    instancesDistribution:
+      maxPrice: 0.017
+      instanceTypes: ["t3.small", "t3.medium"]
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 50
+      spotInstancePools: 2
+    labels:
+      nodegroup-type: marx
+      role: cheap-compute
+    iam:
+      withAddonPolicies:
+        # imageBuilder: true
+        autoScaler: true
+        externalDNS: true
+        certManager: true
+        # appMesh: true
+        # ebs: true
+        # fsx: true
+        # efs: true
+        albIngress: true
+        xRay: true
+        cloudWatch: true

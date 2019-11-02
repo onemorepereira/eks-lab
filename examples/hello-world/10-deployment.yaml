@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "hw"
+  namespace: "hw"
+spec:
+  replicas: 15
+  template:
+    metadata:
+      labels:
+        app: "hw"
+    spec:
+      containers:
+      - image: nginx:alpine
+        imagePullPolicy: Always
+        name: "hw"
+        ports:
+        - containerPort: 80
+        env:
+        - name: NGINX_PORT
+          value: "80"
+
+
