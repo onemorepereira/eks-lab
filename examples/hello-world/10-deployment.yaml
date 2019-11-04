@@ -10,6 +10,7 @@ spec:
       labels:
         app: "hw"
     spec:
+      serviceAccountName: s3-reader
       containers:
       - image: nginx:alpine
         imagePullPolicy: Always
@@ -19,5 +20,21 @@ spec:
         env:
         - name: NGINX_PORT
           value: "80"
-
-
+        volumeMounts:
+        - name: workdir
+          mountPath: /usr/share/nginx/html
+      # Spin up and init-container
+      initContainers:
+      - name: install
+        image: busybox
+        command:
+        - sh
+        - "-c"
+        - "echo \"<h1>Hello World! This is ${HOSTNAME}</h1>\" > /work-dir/index.html;"
+        volumeMounts:
+        - name: workdir
+          mountPath: "/work-dir"
+      # Create emptyDir type volume
+      volumes:
+      - name: workdir
+        emptyDir: {}
