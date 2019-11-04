@@ -2,7 +2,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: mpereira
+  name: eks-lab
   region: us-west-2
 
 nodeGroups:
@@ -22,7 +22,7 @@ nodeGroups:
     tags:
       # EC2 tags required for cluster-autoscaler auto-discovery
       k8s.io/cluster-autoscaler/enabled: "true"
-      k8s.io/cluster-autoscaler/mpereira: "owned"
+      k8s.io/cluster-autoscaler/eks-lab: "owned"
 
   - name: ng-2
     instanceType: mixed
@@ -52,7 +52,7 @@ nodeGroups:
     tags:
       # EC2 tags required for cluster-autoscaler auto-discovery
       k8s.io/cluster-autoscaler/enabled: "true"
-      k8s.io/cluster-autoscaler/mpereira: "owned"
+      k8s.io/cluster-autoscaler/eks-lab: "owned"
 
 cloudWatch:
   clusterLogging:
