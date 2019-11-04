@@ -19,6 +19,10 @@ nodeGroups:
         albIngress: true
         xRay: true
         cloudWatch: true
+    tags:
+      # EC2 tags required for cluster-autoscaler auto-discovery
+      k8s.io/cluster-autoscaler/enabled: "true"
+      k8s.io/cluster-autoscaler/mpereira: "owned"
 
   - name: ng-2
     instanceType: mixed
@@ -45,6 +49,11 @@ nodeGroups:
         albIngress: true
         xRay: true
         cloudWatch: true
+    tags:
+      # EC2 tags required for cluster-autoscaler auto-discovery
+      k8s.io/cluster-autoscaler/enabled: "true"
+      k8s.io/cluster-autoscaler/mpereira: "owned"
+
 cloudWatch:
   clusterLogging:
     enableTypes:
@@ -53,3 +62,31 @@ cloudWatch:
       - "authenticator"
       - "controllerManager"
       - "scheduler"
+
+iam:
+  withOIDC: true
+  serviceAccounts:
+  - metadata:
+      name: s3-reader
+      # if no namespace is set, "default" will be used;
+      # the namespace will be created if it doesn't exist already
+      namespace: hw
+      labels: {aws-usage: "application"}
+    attachPolicyARNs:
+    - "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+  - metadata:
+      name: cluster-autoscaler
+      namespace: kube-system
+      labels: {aws-usage: "cluster-ops"}
+    attachPolicy: # inline policy can be defined along with `attachPolicyARNs`
+      Version: "2012-10-17"
+      Statement:
+      - Effect: Allow
+        Action:
+        - "autoscaling:DescribeAutoScalingGroups"
+        - "autoscaling:DescribeAutoScalingInstances"
+        - "autoscaling:DescribeLaunchConfigurations"
+        - "autoscaling:DescribeTags"
+        - "autoscaling:SetDesiredCapacity"
+        - "autoscaling:TerminateInstanceInAutoScalingGroup"
+        Resource: '*'
