@@ -10,9 +10,7 @@ nodeGroups:
     instanceType: t2.large
     privateNetworking: true
     desiredCapacity: 2
-    labels:
-      nodegroup-type: groucho
-      role: expensive-compute
+    labels: { "nodegroup-type": "regularWorkers", "role": "regularWorkers" }
     iam:
       withAddonPolicies:
         autoScaler: true
@@ -33,9 +31,7 @@ nodeGroups:
       onDemandBaseCapacity: 0
       onDemandPercentageAboveBaseCapacity: 50
       spotInstancePools: 2
-    labels:
-      nodegroup-type: marx
-      role: cheap-compute
+    labels: { "nodegroup-type": "spotWorkers", "role": "spotWorkers" }
     iam:
       withAddonPolicies:
         # imageBuilder: true
@@ -49,3 +45,11 @@ nodeGroups:
         albIngress: true
         xRay: true
         cloudWatch: true
+cloudWatch:
+  clusterLogging:
+    enableTypes:
+      - "api"
+      - "audit"
+      - "authenticator"
+      - "controllerManager"
+      - "scheduler"
