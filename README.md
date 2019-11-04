@@ -51,3 +51,28 @@ AWS ALB Ingress controller
   Repository: https://github.com/kubernetes-sigs/aws-alb-ingress-controller.git
 -------------------------------------------------------------------------------
 ```
+
+### Cluster Observability
+
+***Retrieve the `admin-user` token***
+
+```bash
+kubectl describe secret \
+  $(kubectl get secrets \
+    -n kubernetes-dashboard \
+    |grep admin-user-token \
+    |awk '{print $1}') \
+  -n kubernetes-dashboard
+```
+
+***Accessing Dashboards***
+
+Proxy the cluster control plane
+
+```bash
+kubect proxy
+```
+
+***URL***
+
+> http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
