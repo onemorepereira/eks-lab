@@ -7,17 +7,10 @@ metadata:
 
 nodeGroups:
   - name: ng-1
-    instanceType: mixed
+    instanceType: t2.large
     privateNetworking: true
-    minSize: 2
-    maxSize: 5
-    instancesDistribution:
-      maxPrice: 0.017
-      instanceTypes: ["t3.small", "t3.medium"]
-      onDemandBaseCapacity: 0
-      onDemandPercentageAboveBaseCapacity: 50
-      spotInstancePools: 2
-    labels: { "nodegroup-type": "spotWorkers", "role": "spotWorkers" }
+    desiredCapacity: 2
+    labels: { "nodegroup-type": "regularWorkers", "role": "regularWorkers" }
     iam:
       withAddonPolicies:
         autoScaler: true
