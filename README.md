@@ -44,10 +44,10 @@ eksctl create cluster -f cluster.yaml
   - `./add-ons/30-dahboard/31-service-account.yaml`
   - `./add-ons/30-dahboard/32-dashboard.yaml`
 
-## (3) Deploying the examples
+## (3) Deploying bundled application samples
 
 ```bash
-./deploy-examples.sh
+./deploy-samples.sh
 ```
 
 ## (4) Destruction and cleanup
