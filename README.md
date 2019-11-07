@@ -43,6 +43,8 @@ eksctl create cluster -f cluster.yaml
 - [K8s Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
   - `./add-ons/30-dahboard/31-service-account.yaml`
   - `./add-ons/30-dahboard/32-dashboard.yaml`
+- [Cluster Autoscaler](https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html)
+  - `./add-ons/50-autoscaler/51-autoscaler.yaml`
 
 ## (3) Deploying bundled application samples
 
