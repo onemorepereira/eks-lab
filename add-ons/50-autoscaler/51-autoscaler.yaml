@@ -151,6 +151,9 @@ spec:
             - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/eks-lab
             - --balance-similar-node-groups
             - --skip-nodes-with-system-pods=false
+            - --scale-down-delay-after-delete=5m
+            - --scale-down-delay-after-add=5m
+            - --scale-down-delay-after-failure=5m
           volumeMounts:
             - name: ssl-certs
               mountPath: /etc/ssl/certs/ca-certificates.crt
